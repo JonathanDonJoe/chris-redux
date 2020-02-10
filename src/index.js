@@ -6,14 +6,17 @@ function counter(state = { amount: 100 }, action) {
     console.table(action)
     const newState = { ...state };
     if (action.type === 'INCREMENT') {
-        newState.amount = state.amount + 1
+        newState.amount = state.amount + action.amount
     } else if (action.type === 'DECREMENT') {
-        newState.amount = state.amount - 1
+        newState.amount = state.amount - action.amount
     } else {
 
     }
     return newState
 }
+
+const INCREMENT = 'INCREMENT';
+const DECREMENT = 'DECREMENT';
 
 const store = createStore(counter);
 
@@ -22,28 +25,22 @@ store.subscribe(() => {
     console.table(store.getState())
 })
 
-store.dispatch({
-    type: 'INCREMENT'
-})
-store.dispatch({
-    type: 'INCREMENT'
-})
-store.dispatch({
-    type: 'DECREMENT'
-})
+function actionIncrement(amt) {
+    return {
+        type: INCREMENT,
+        amount: amt
+    }
+}
+function actionDecrement(amt) {
+    return {
+        type: DECREMENT,
+        amount: amt
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+store.dispatch(actionIncrement(3))
+store.dispatch(actionDecrement(20))
+store.dispatch(actionIncrement(12))
 
 
 
